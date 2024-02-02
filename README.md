@@ -1,1 +1,1 @@
-# Matte_Multi-domain-Counterfactual-Generation-with-identifiability-guarantee
+# Multi-domain-Counterfactual-Generation-with-identifiability-guarantee
