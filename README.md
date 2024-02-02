@@ -7,8 +7,9 @@
 <p align="center">
 <img src="causal_graph_noC.png"  width="350" >
 </p>
-<em>The data generation process: The grey shading indicates the variable is observed. $x$ is text, $c$ and $s$ are content and style variables, $\tilde{s}$ is the exgenous variable, indepedent to $c$. </em>
-
+The data generation process: The grey shading indicates the variable is observed. x is text, c and s are content and style variables, $\tilde{s}$ is the exgenous variable, indepedent to $$c$$.
+<br>
+</br>
 <p align="center">
 <img src="model_overview.png"  width="350" >
 </p>
