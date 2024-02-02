@@ -26,12 +26,12 @@ bash scripts/transfer.sh #tranfer to target attribute based on the well-trained 
 If you find our work useful, please cite as:
 
 ```
-@misc{yan2021position,
-      title={Position Bias Mitigation: A Knowledge-Aware Graph Model for Emotion Cause Extraction}, 
-      author={Hanqi Yan and Lin Gui and Gabriele Pergola and Yulan He},
-      year={2021},
-      eprint={2106.03518},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL}
+@inproceedings{
+yan2023counterfactual,
+title={Counterfactual Generation with Identifiability Guarantees},
+author={Hanqi Yan and Lingjing Kong and Lin Gui and Yuejie Chi and Eric Xing and Yulan He and Kun Zhang},
+booktitle={Thirty-seventh Conference on Neural Information Processing Systems},
+year={2023},
+url={https://openreview.net/forum?id=cslnCXE9XA}
 }
 ```
