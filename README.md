@@ -5,8 +5,9 @@
 **Solutions:** In this work, we tackle the domain-varying dependence between the content and the style variables inherent in the counterfactual generation task. We provide identification guarantees for such latent-variable models by leveraging the relative sparsity of the influences from different latent variables. Our theoretical insights enable the development of a do**M**ain **A**dap**T**ive coun**T**erfactual g**E**neration model, called (MATTE). 
 
 <p align="center">
-<img src="causal_graph.png"  width="250" >
+<img src="causal_graph_noC.png"  width="350" >
 </p>
+<em>The data generation process: The grey shading indicates the variable is observed. $x$ is text, $c$ and $s$ are content and style variables, $\tilde{s}$ is the exgenous variable, indepedent to $c$. </em>
 
 <p align="center">
 <img src="model_overview.png"  width="350" >
