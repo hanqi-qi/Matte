@@ -9,7 +9,8 @@ Counterfactual generation lies at the core of various machine learning tasks. Ex
 
 ## Code Structure
 ```
-python main.py
+bash scripts/train.sh  #train the model
+bash scripts/transfer.sh #tranfer to target attribute based on the well-trained latent space
 ```
 
 ## Citation
