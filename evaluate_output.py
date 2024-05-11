@@ -32,21 +32,9 @@ def main(args):
     train_data = MonoTextData(train_pth,n_domains=1)
     vocab = train_data.vocab
     # source_pth = os.path.join(data_pth, "test_data.txt")
-    source_pth = "/mnt/Data3/hanqiyan/style_transfer_baseline/checkpoint/model-yelp-glove-w0domid-cpvae-useflow-True-seed-39-allloss/20230715-193445/yelp_reference_results_flip.txt"
-    target_pth = "/mnt/Data3/hanqiyan/style_transfer_baseline/checkpoint/model-yelp-glove-w0domid-cpvae-useflow-True-seed-39-allloss/20230715-193445/yelp_transfer_results_flip.txt"
-    """"
-    [CPVAE]
+    source_pth = "yelp_reference_results.txt"
+    target_pth = "yelp_transfer_results.txt"
 
-    [OptimusSNLi]
-        "/mnt/Data3/hanqiyan/Optimus/unsupervised_transfer/yelp_transfer_step_3.txt"
-    [BetaVAE]
-        "/mnt/Data3/hanqiyan/CP-VAE/checkpoint/baseline-all_domains/20230401-143929/yahoo_generated_text_1.txt"
-    [jointrain]
-        "
-    [indomain]
-        "/mnt/Data3/hanqiyan/style_transfer_baseline/checkpoint/model-amazon-glove-w0domid-inDomain/20230329-160303/amazon_transfer_results_flip_InDomain.txt"
-    # target_pth = "/mnt/Data3/hanqiyan/style_transfer_baseline/checkpoint/cpvae_pretrain-DoCoGen_review-glove/20230129-164731/imdb_transfer_results_0206.txt"
-    """
     data_name = target_pth.split("/")[-1].split("_")[0]
     print("Evaluating the %s Dataet"%data_name)
     eval_data = MonoTextData(target_pth,n_domains=1,vocab=vocab)

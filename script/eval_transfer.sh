@@ -1,1 +1,0 @@
-python evaluate_output.py --data_name  --target_path /mnt/Data3/hanqiyan/style_transfer/checkpoint/cpvae_pretrain-DoCoGen_review-glove/20230129-164731/reference_results_v2.txt

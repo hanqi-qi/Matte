@@ -19,6 +19,7 @@ The data generation process: The grey shading indicates the variable is observed
 ```
 bash scripts/train.sh  #train the model
 bash scripts/transfer_all.sh #tranfer to target attribute based on the well-trained latent space
+python evaluate_output.py #evaluate the generated text in BLEU, ACC, G-SCORE, PPL, and CTC score.
 ```
 
 ## Citation
