@@ -59,7 +59,7 @@ def get_bert_embeds(in_file,out_file):
         print("Save BERT [CLS] Embeddings")
 
 def get_glove_embeds(in_file, out_file):
-    glove_file = "../glove.840B.300d.txt"
+    glove_file = "/mnt/Data3/hanqiyan/glove.840B.300d.txt"
     word_vec = {}
     with open(glove_file) as f:
         for line in f:
@@ -110,8 +110,8 @@ def read_data(data_name):
     # LOAD DATA
     domain_dict = {"imdb":0,"yelp_dast":1,"amazon":2,"yahoo":3}
     for split in ["train","dev","test"]:
-        reader = codecs.open("../data/%s/%s.txt" %(data_name,split))
-        outfile = open("../data/%s/%s_data.txt" %(data_name,split),"w+")
+        reader = codecs.open("/mnt/Data3/hanqiyan/UDA/real_world/data/%s/%s.txt" %(data_name,split))
+        outfile = open("/mnt/Data3/hanqiyan/UDA/real_world/data/%s/%s_data.txt" %(data_name,split),"w+")
         line_id = 0
         while True:
             string_ = reader.readline()
@@ -126,7 +126,7 @@ def read_data(data_name):
         print("Processing %s Dataset %s Split %d samples"%(data_name,split,line_id))
 
 def main(args):
-    data_pth = "../data/%s" % args.data_name
+    data_pth = "/mnt/Data3/hanqiyan/UDA/real_world/data/%s" % args.data_name
     res_pth = "results/%s" % args.data_name
     # read_data(args.data_name)
     #save as the train_data.txt, dev_data.txt, test_data.txt
@@ -147,6 +147,38 @@ def main(args):
         # get_glove_embeds(fin, fout)
         get_bert_embeds(fin,fout)
 
+    # conf = config.CONFIG[args.data_name]
+    # if "ref0" in conf:
+    #     ref_pth0 = conf["ref0"]
+    #     ref_pth1 = conf["ref1"]
+    #     ref_pth0 = os.path.join(res_pth, ref_pth0)
+    #     ref_pth1 = os.path.join(res_pth, ref_pth1)
+    #     df0 = pd.read_csv(ref_pth0)
+    #     df1 = pd.read_csv(ref_pth1)
+
+    #     mappings = {
+    #         "CROSSALIGNED": "CA",
+    #         "STYLEEMBEDDING": "SE",
+    #         "MULTIDECODER": "MD",
+    #         "DELETEONLY": "D",
+    #         "DELETEANDRETRIEVE": "D&R",
+    #         "BERT_RET_TFIDF": "G-GST",
+    #         "BERT_DEL": "B-GST",
+    #         "HUMAN": "HUMAN",
+    #         "Source": "SOURCE"
+    #     }
+
+    #     for model in ["CROSSALIGNED", "STYLEEMBEDDING", "MULTIDECODER", "DELETEONLY",
+    #                   "DELETEANDRETRIEVE", "BERT_RET_TFIDF", "BERT_DEL", "HUMAN", "Source"]:
+    #         name = mappings[model]
+    #         sent0 = df0[model].tolist()
+    #         sent1 = df1[model].tolist()
+    #         outpth = os.path.join(res_pth, name + ".txt")
+    #         with open(outpth, "w") as f_out:
+    #             for x in sent0:
+    #                 f_out.write("1\t%s\n" % str(x).strip().lower())
+    #             for x in sent1:
+    #                 f_out.write("0\t%s\n" % str(x).strip().lower())
 def add_args(parser):
     parser.add_argument('--data_name', type=str, default='imdb')
 

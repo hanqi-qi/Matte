@@ -14,11 +14,9 @@ from sklearn import preprocessing
 from scipy.stats import ttest_ind
 import torch
 
-data_name = 'amazon'
-data_path = "../data/"
-current_path = "../checkpoint/model1/plot/amazon_nll_flip.txt"
-# base_path = "../checkpoint/model2/plot/amazon_nll_flip.txt"
-noise_path = "../checkpoint/noise_model/plot/amazon_nll_flip.txt"
+data_name = 'yelp_dast'
+data_path = "/mnt/Data3/hanqiyan/UDA/real_world/data/"
+current_path = "/mnt/Data3/hanqiyan/style_transfer_baseline/checkpoint/cpvae_pretrain-DoCoGen_review-glove/20230129-164731/plot/"
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def MMD(x, y, kernel):
@@ -67,48 +65,71 @@ def load_nll(filename):
     with open(filename) as f:
         for line in f:
             m1, m2 = line.strip().split('\t')
-            if float(m1)<-5000:
-                m1s.append(float(m1[3:]))
-                m2s.append(float(m2[3:]))
-                print(float(m1[3:]),float(m2[3:]))
-            else:
-                m1s.append(-float(m1))
-                m2s.append(-float(m2))
-    # stat = MMD(m1s, m2s,kernel='rbf')
-    # print(f"MMD distance={stat:.4f}")
+            m1s.append(-float(m1))
+            m2s.append(-float(m2))
+    stat = MMD(m1s, m2s,kernel='rbf')
+    print(f"MMD distance={stat:.4f}")
     # m1s = preprocessing.normalize([m1s],norm='max')
     # m2s = preprocessing.normalize([m2s],norm='max')
     return m1s, m2s
 
-fig = plt.figure(figsize=(5,2),dpi=300)
+fig = plt.figure()
 
+# beta-VAE one std
 
-ax6 = fig.add_subplot(121)
-m1, m2 = load_nll(current_path)
-ax6.hist(m1, 100, color="tab:green", alpha=0.5,range=(100,1200))
-ax6.hist(m2, 100, color="tab:pink", alpha=0.5,range=(100,1200))
+# ax2 = fig.add_subplot(211)
+# m1, m2 = load_nll(data_path+"plot/nll.txt")
+# ax2.hist(m1, 50, color="tab:green", alpha=0.5)
+# ax2.hist(m2, 50, color="tab:red", alpha=0.5)
+
+# handles = [Rectangle((0, 0), 1, 1, color=c, alpha=0.5, ec="k") for c in ["tab:green", "tab:red"]]
+# labels = [r"$\beta$-VAE", r"$\pm\sigma$"]
+# ax2.legend(handles, labels, loc='upper right')
+
+# ax2.set_ylabel('Number of Samples')
+# ax2.set_title('(A)', x=0.0, fontsize=12)
+
+# # beta-VAE two std
+
+ax4 = fig.add_subplot(222)
+m1, m2 = load_nll(current_path+"%s_nll_1000_flipped_shift_1.txt"%data_name)
+ax4.hist(m1, 100, color="tab:green", alpha=0.5,range=(100,6000))
+ax4.hist(m2, 100, color="tab:purple", alpha=0.5,range=(100,6000))
+
+handles = [Rectangle((0, 0), 1, 1, color=c, alpha=0.5, ec="k") for c in ["tab:green", "tab:purple"]]
+labels = [r"CP-VAE", "$\pm1*\sigma$"]
+ax4.legend(handles, labels, loc='upper right')
+
+ax4.set_title('(B)', x=0.0, fontsize=12)
+
+# beta-VAE extreme
+
+ax6 = fig.add_subplot(223)
+m1, m2 = load_nll(current_path+"%s_nll_1000_flipped_shift_2.txt"%data_name)
+ax6.hist(m1, 100, color="tab:green", alpha=0.5,range=(100,6000))
+ax6.hist(m2, 100, color="tab:pink", alpha=0.5,range=(100,6000))
 
 handles = [Rectangle((0, 0), 1, 1, color=c, alpha=0.5, ec="k") for c in ["tab:green", "tab:pink"]]
-labels = ["Original", "Flipped"]
-ax6.legend(handles, labels, loc='upper right',fontsize=8)
+labels = [r"CP-VAE", "$\pm2*\sigma$"]
+ax6.legend(handles, labels, loc='upper right')
 
-ax6.set_xlabel('NLL of the Latent Variables',fontsize=8)
-ax6.set_ylabel('Number of Samples',fontsize=8)
-ax6.set_title(r'Flip $s$', x=0.5, fontsize=8)
+ax6.set_xlabel('NLL of the Latent Codes')
+ax6.set_ylabel('Number of Samples')
+ax6.set_title('(C)', x=0.0, fontsize=12)
 
 # CP-VAE
 
-ax8 = fig.add_subplot(122)
-m1, m2 = load_nll(noise_path)
-ax8.hist(m2, 80, color="tab:green", alpha=0.5,range=(100,1500))
-ax8.hist(m1, 80, color="tab:purple", alpha=0.5,range=(100,1500))
+ax8 = fig.add_subplot(224)
+m1, m2 = load_nll(current_path+"%s_nll_1000_flipped_shift_3.txt"%data_name)
+ax8.hist(m2, 80, color="tab:orange", alpha=0.5,range=(100,6000))
+ax8.hist(m1, 80, color="tab:cyan", alpha=0.5,range=(100,6000))
 
 
-handles = [Rectangle((0, 0), 1, 1, color=c, alpha=0.5, ec="k") for c in ["tab:green", "tab:purple"]]
-labels = ["Original", "Flipped"]
-ax8.legend(handles, labels, loc='upper right',fontsize=8)
+handles = [Rectangle((0, 0), 1, 1, color=c, alpha=0.5, ec="k") for c in ["tab:cyan", "tab:orange"]]
+labels = ["CP-VAE", "$\pm3*\sigma$"]
+ax8.legend(handles, labels, loc='upper right')
 
-ax8.set_xlabel('NLL of the Latent Variables',fontsize=8)
-ax8.set_title(r'Flip $\tilde{s}$', x=0.5, fontsize=8)
+ax8.set_xlabel('NLL of the Latent Codes')
+ax8.set_title('(D)', x=0.0, fontsize=12)
 
-plt.savefig('%s_nll_comparison.png'%data_name,bbox_inches = "tight")
+plt.savefig(current_path+'%s_nll_comparison.png'%data_name)

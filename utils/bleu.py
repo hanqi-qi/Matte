@@ -41,7 +41,7 @@ def calculate_gscore(refs,targets,confids):
         bleu = sentence_bleu(refs[j], targets[j], smoothing_function=smoothie)
         bleu *= 100
         confid = confids[j] * 100
-        gscore = 2 * confid * bleu / (confid + bleu+1e-4)
+        gscore = 2 * confid * bleu / (confid + bleu)
         total_gscore += gscore
     print('The total g score is: %f' % (total_gscore/len(confids)))
     return gscore

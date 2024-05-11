@@ -7,7 +7,6 @@ model = GPT2LMHeadModel.from_pretrained(model_id).to(device)
 tokenizer = GPT2TokenizerFast.from_pretrained(model_id)
 
 def cal_ppl(target):
-    target = target.dropna()
     text = target.content.tolist()
     text_str = "\n\n".join(text)
     word_list = text_str.split()

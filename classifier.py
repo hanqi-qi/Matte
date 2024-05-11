@@ -39,8 +39,7 @@ class CNNClassifier(nn.Module):
         outputs = torch.cat(outputs, -1)
         outputs = self.dropout(outputs)
         logits = self.output(outputs)
-        return logits.squeeze(1)
-        
+        return logits.squeeze(1)        
 
 def evaluate_func(model, eval_data, eval_label):
     correct_num = 0
@@ -59,7 +58,7 @@ def evaluate_func(model, eval_data, eval_label):
     return correct_num / total_sample, acc_list
 
 def main(args):
-    root_path = "../data/"
+    root_path = "/mnt/Data3/hanqiyan/UDA/real_world/data/"
     domain_dict = {"imdb":0,"yelp_dast":1,"amazon":2,"yahoo":3}
     domain_i2d = {"0":"imdb","1": "yelp_dast","2":"amazon","3":"yahoo"}
     pretrain_domids = ["0","1","2","3"]
@@ -114,17 +113,17 @@ def main(args):
     vocab = train_data.vocab
     print('Vocabulary size: %d' % len(vocab))
 
-    dev_data = MonoTextData(test_data_pth,args.n_domains, vocab=vocab)
+    dev_data = MonoTextData(dev_data_pth,args.n_domains, vocab=vocab)
     # assert len(dev_data) == dev_feat.shape[0]
     
     test_data = MonoTextData(test_data_pth, args.n_domains, vocab=vocab)  
     # assert len(test_data) == test_feat.shape[0]
 
     
-    path = "checkpoint/%s-formality_classifier.pt" % args.data_name
+    path = "checkpoint/%s-classifier-pure.pt" % args.data_name
 
     glove_embed = np.zeros((len(vocab), 300))
-    with open("/home/dcs/csrbhw/data/glove/glove.840B.300d.txt") as f:
+    with open("/mnt/Data3/hanqiyan/glove.840B.300d.txt") as f:
         for line in f:
             word, vec = line.split(' ', 1)
             if word in vocab:

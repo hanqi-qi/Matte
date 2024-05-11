@@ -3,7 +3,6 @@ import torch.nn as nn
 import torch.distributions as D
 from torch.nn import functional as F
 from .spline import _monotonic_rational_spline, _construct_nn
-# import ipdb as pdb
 
 class ComponentWiseCondSpline(nn.Module):
     def __init__(
@@ -125,10 +124,10 @@ class NormalizingCondFlow(nn.Module):
             log_det += ld
         return x, log_det
 
-    def inverse(self, z,context):
+    def inverse(self, z):
         m, _ = z.shape
         log_det = 0
         for flow in self.flows[::-1]:
-            z, ld = flow.inverse(z,context)
+            z, ld = flow.inverse(z)
             log_det += ld
         return z, log_det

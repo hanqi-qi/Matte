@@ -1,1 +1,1 @@
-CUDA_VISIBLE_DEVICES=1 python preprocess_cpvae.py --data_name music
+CUDA_VISIBLE_DEVICES=1 python preprocess_cpvae.py --data_name yelp 

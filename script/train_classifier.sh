@@ -1,1 +1,1 @@
-python classifier.py --data_name all_dataset
+python finetune_Enc2Classify.py --data_name all_dataset

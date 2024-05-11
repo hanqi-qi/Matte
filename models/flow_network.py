@@ -99,23 +99,6 @@ class SigmoidFlow(BaseFlow):
 
         return xnew.squeeze(-1)
 
-def oper(array,oper,axis=-1,keepdims=False):
-    a_oper = oper(array)
-    if keepdims:
-        shape = []
-        for j,s in enumerate(array.size()):
-            shape.append(s)
-        shape[axis] = -1
-        a_oper = a_oper.view(*shape)
-    return a_oper
-
-def log_sum_exp(A, axis=-1, sum_op=torch.sum):    
-    maximum = lambda x: x.max(axis)[0]    
-    A_max = oper(A,maximum, axis, True)
-    summation = lambda x: sum_op(torch.exp(x-A_max), axis)
-    B = torch.log(oper(A,summation,axis,True)) + A_max    
-    return B
-
 class DenseSigmoidFlow(BaseFlow):
 
     def __init__(self, in_dim, hidden_dim, out_dim):
@@ -198,8 +181,7 @@ class DDSF(nn.Module):
             self.num_params += block.num_params
         self.model = nn.ModuleList(blocks)
 
-    def forward(self, inputs):
-        x,dsparams,logdet = inputs
+    def forward(self, x, dsparams):
         start = 0
         _logdet = None
 
@@ -212,9 +194,20 @@ class DDSF(nn.Module):
 
         return x, logdet
 
-    def log_prob(self, x, dsparams):
-        z, log_detJ = self.forward(x, dsparams)
-        logp = self.base_dist.log_prob(z) + log_detJ
-        return logp
-    
-    
+
+def oper(array,oper,axis=-1,keepdims=False):
+    a_oper = oper(array)
+    if keepdims:
+        shape = []
+        for j,s in enumerate(array.size()):
+            shape.append(s)
+        shape[axis] = -1
+        a_oper = a_oper.view(*shape)
+    return a_oper
+
+def log_sum_exp(A, axis=-1, sum_op=torch.sum):    
+    maximum = lambda x: x.max(axis)[0]    
+    A_max = oper(A,maximum, axis, True)
+    summation = lambda x: sum_op(torch.exp(x-A_max), axis)
+    B = torch.log(oper(A,summation,axis,True)) + A_max    
+    return B
