@@ -1,5 +1,0 @@
-| epoch  1 |  2000/673641 batches | 50.60 ms/batch | loss 59.35 | recon 56.85 | kl1 0.51 | kl2 1.98
-| epoch  1 |  4000/673641 batches | 51.73 ms/batch | loss 54.19 | recon 51.26 | kl1 0.35 | kl2 2.59
-| epoch  1 |  6000/673641 batches | 51.05 ms/batch | loss 53.17 | recon 50.17 | kl1 0.22 | kl2 2.78
-| epoch  1 |  8000/673641 batches | 50.92 ms/batch | loss 52.25 | recon 49.23 | kl1 0.20 | kl2 2.81
-| epoch  1 | 10000/673641 batches | 45.95 ms/batch | loss 51.38 | recon 48.21 | kl1 0.22 | kl2 2.96

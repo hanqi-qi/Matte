@@ -1,4 +1,0 @@
-| epoch  1 |  2000/42122 batches | 99.19 ms/batch | loss 56.55 | recon 53.00 | kl1 0.42 | kl2 3.13
-| epoch  1 |  4000/42122 batches | 100.74 ms/batch | loss 53.54 | recon 49.51 | kl1 0.71 | kl2 3.31
-| epoch  1 |  6000/42122 batches | 100.20 ms/batch | loss 52.08 | recon 46.06 | kl1 2.71 | kl2 3.31
-Exiting from training early

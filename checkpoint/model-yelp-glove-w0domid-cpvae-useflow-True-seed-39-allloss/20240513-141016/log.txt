@@ -1,1 +1,0 @@
-Exiting from training early
